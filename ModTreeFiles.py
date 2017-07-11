@@ -10,7 +10,7 @@ import pdb
 import Plotting_Header
 from Plotting_Header import *
 
-def mod_trees(file_name, pwd, pwd_DDT, dest, reweight_pwd=""):
+def mod_trees(file_name, pwd, pwd_DDT, dest, analysis_dir=""):
 	TransFile = TFile(pwd_DDT+"/DDT.root")
 	# Get Data maps
 	CorrSig_data = TransFile.Get("DDT_data_sr")
@@ -23,8 +23,8 @@ def mod_trees(file_name, pwd, pwd_DDT, dest, reweight_pwd=""):
 	CorrSig_W_sigma = TransFile.Get("DDT_W_sr_sigma")
 	CorrBkg_W_sigma = TransFile.Get("DDT_W_sb_sigma")
 
-	if file_name == "TT.root":	File = TFile("root://cmsxrootd.fnal.gov/"+ reweight_pwd +"/"+ file_name)
-	elif file_name.startswith("MCDATA"):  File = TFile("root://cmsxrootd.fnal.gov/"+ "Step0_MakeData/" + file_name)
+	if file_name.startswith("TT"):	File = TFile("root://cmsxrootd.fnal.gov/"+ analysis_dir +"TT_reweigh/"+ file_name)
+	elif file_name.startswith("MCDATA"):  File = TFile("root://cmsxrootd.fnal.gov/"+ analysis_dir +"FakeData/" + file_name)
 	else: File = TFile("root://cmsxrootd.fnal.gov/"+ pwd + file_name)
 	Tree = File.Get("tree_T1")
 	make_dirs(dest)

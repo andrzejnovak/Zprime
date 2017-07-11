@@ -1,3 +1,5 @@
+from Reweight import tt_reweigh
+from MakeData import make_fake_data
 from DDT import *
 from ModTreeFiles import *
 from EstimateWJets import *
@@ -20,6 +22,13 @@ root_cuts =  ["LepType>0&TPRIMEM>300&TPRIMEM<700","LepType<0&TPRIMEM>300&TPRIMEM
 # Specify absolute folder to store analysis files/output
 over_dir = "/home/storage/andrzejnovak/Analysis/"
 
+# Prepare TT reweighs:
+#tt_reweigh([80,90,100,110,120], root_files, over_dir)
+
+# Prepare fake data:
+#make_fake_data([80,100,120], root_files, over_dir)
+
+
 def run_DDT():
 	for eta, run in zip(etas, eta_names):
 		run = over_dir+run
@@ -31,13 +40,13 @@ def run_DDT():
 			f.write("<html><table>")
 			table = [["TT% in data", "TT%", "Signal_data", "Signal_WJets", "Sideband_data", "Sideband_WJets"]]
 			for d_percentage in datalist:
-				Data =["Step0_MakeData/MCDATA"+str(d_percentage)+".root"]
+				Data =[over_dir+"FakeData/MCDATA"+str(d_percentage)+".root"]
 
 				reweights = [90, 100, 110]
 				for percentage in reweights:
 					name_dir = "tt"+str(percentage)+"percent"
 					folder = run+"/"+name+"/Step2_DDT/Data"+str(d_percentage)+"/"+name_dir
-					TT = ["Step1_Reweight/"+name_dir+"/TT.root"]
+					TT = [over_dir+"TT_reweigh/TT"+str(percentage)+".root"]
 				
 					counts = study(Data, TT, ST, Ws, cut, analysis_folder = folder, toretain=eta, data=False, lumi=35.9, bins_x = bin_x, bins_y = bin_y)
 					row = [str(d_percentage), str(percentage)]
@@ -45,7 +54,7 @@ def run_DDT():
 					table.append(row)
 					print row
 
-			for row in table:
+			for row in table		:
 				print row
 				f.write("<tr><td>"+"</td><td>".join(row)+"</td></tr>")
 			f.write("</table></html>")
@@ -59,14 +68,13 @@ def run_ModTreeFiles():
 		print run
 		for name, cut in zip(names,cuts):
 			for d_percentage in datalist:	
-				File_names = ["ST.root", "WJets.root", "TT.root"]
-				File_names.append("MCDATA"+str(d_percentage)+".root")
+				File_names = ["ST.root", "WJets.root", "TT"+str(d_percentage)+".root", "MCDATA"+str(d_percentage)+".root"]
 
 				reweights = [90, 100, 110]
 				for percentage in reweights:
 					name_dir = "tt"+str(percentage)+"percent"
 					for d in File_names:
-						mod_trees(d ,root_files, run+"/"+name+"/Step2_DDT/Data"+str(d_percentage)+"/"+name_dir,  run+"/"+name+ "/Step3_ModTreeFiles/Data"+str(d_percentage)+"/"+name_dir , "Step1_Reweight/"+name_dir )
+						mod_trees(d, root_files, run+"/"+name+"/Step2_DDT/Data"+str(d_percentage)+"/"+name_dir,  run+"/"+name+ "/Step3_ModTreeFiles/Data"+str(d_percentage)+"/"+name_dir , over_dir )
 
 
 # Plot Estimate
@@ -91,7 +99,10 @@ def run_Prep_theta():
 				to_dir = run+"/"
 				make_theta_file(name, from_dir, to_dir, str(d_percentage), cut)
 
-#run_DDT()
-#run_ModTreeFiles()
-run_EstimateWJets()
+
+
+
+run_DDT()
+run_ModTreeFiles()
+#run_EstimateWJets()
 #run_Prep_theta()
