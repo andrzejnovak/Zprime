@@ -28,8 +28,10 @@ def mod_trees(file_name, pwd, pwd_DDT, dest, analysis_dir=""):
 	else: File = TFile("root://cmsxrootd.fnal.gov/"+ pwd + file_name)
 	Tree = File.Get("tree_T1")
 	make_dirs(dest)
-	f = ROOT.TFile(dest+"/"+ file_name, "recreate" )
-       	tree = Tree.CloneTree(0)
+
+	if file_name.startswith("TT"):	f = ROOT.TFile(dest+"/TT.root", "recreate" )
+	else: 	f = ROOT.TFile(dest+"/"+ file_name, "recreate" )
+	tree = Tree.CloneTree(0)
 		
 	Tau32DDT_Bkg = array('f', [-10.0])
 	tree.Branch('Tau32DDT_Bkg', Tau32DDT_Bkg, 'Tau32DDT_Bkg/F')

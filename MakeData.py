@@ -11,7 +11,7 @@ from Plotting_Header import *
 def make_fake_data(percentages, source_dir ="/home/storage/andrzejnovak/FriedBacon/", save_to=''):
 	print percentages
 	for percentage in percentages:
-		tt_reweigh(percentage, source_dir, save_to=save_to)
+		tt_reweigh([percentage], source_dir, save_to=save_to)
 
 		make_dirs(save_to+"FakeData")
 		os.system("hadd "+save_to+"FakeData/MCDATA"+str(percentage)+".root "+source_dir+"ST.root "+source_dir+"WJets*0.root "+source_dir+"WJets*Inf.root "+save_to+"TT_reweigh/TT"+str(percentage)+".root")

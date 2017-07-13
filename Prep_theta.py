@@ -87,7 +87,6 @@ def make_theta_file(analysis_name, from_dir, to_dir, name, cut_in, varname="ZPRI
 	o_WJets_n_u_e = WJets_reweight_up_e.Clone("ZPRIMEM-EL__WJETS__TTScale__up")
 	o_WJets_n_d_e = WJets_reweight_down_e.Clone("ZPRIMEM-EL__WJETS__TTScale__down")
 
-
 	o_TT = TT.Clone("ZPRIMEM-MU__TTbar")
 	o_TT_u = TT_up.Clone("ZPRIMEM-MU__TTbar__TTScale__up")
 	o_TT_d = TT_down.Clone("ZPRIMEM-MU__TTbar__TTScale__down")
@@ -96,6 +95,7 @@ def make_theta_file(analysis_name, from_dir, to_dir, name, cut_in, varname="ZPRI
 	o_TT_u_e = TT_up_e.Clone("ZPRIMEM-EL__TTbar__TTScale__up")
 	o_TT_d_e = TT_down_e.Clone("ZPRIMEM-EL__TTbar__TTScale__down")
 	o_DATA_e = DATA_e.Clone("ZPRIMEM-EL__DATA")
+	
 
 	Output.Write()
 	Output.Save()

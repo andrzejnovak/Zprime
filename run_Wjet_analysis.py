@@ -20,7 +20,7 @@ cuts = ["T.TPRIMEM>300 and T.TPRIMEM<700 and T.LepType>0", "T.TPRIMEM>300 and T.
 root_cuts =  ["LepType>0&TPRIMEM>300&TPRIMEM<700","LepType<0&TPRIMEM>300&TPRIMEM<700","LepType>0&TPRIMEM>700","LepType<0&TPRIMEM>700"]
 
 # Specify absolute folder to store analysis files/output
-over_dir = "/home/storage/andrzejnovak/Analysis/"
+over_dir = "/home/storage/andrzejnovak/test_Analysis/"
 
 # Prepare TT reweighs:
 #tt_reweigh([80,90,100,110,120], root_files, over_dir)
@@ -102,7 +102,7 @@ def run_Prep_theta():
 
 
 
-run_DDT()
+#run_DDT()
 run_ModTreeFiles()
-#run_EstimateWJets()
-#run_Prep_theta()
+run_EstimateWJets()
+run_Prep_theta()
